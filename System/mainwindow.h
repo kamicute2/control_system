@@ -3,7 +3,12 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
-
+#include <QtSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlTableModel>
+#include "form.h"
+#include "visitor.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -18,9 +23,17 @@ public:
 
 private slots:
     void on_addButton_clicked();
+    void on_editButon_clicked();
+
+public slots:
+    //void receiveData(Visitor);
+signals:
+    //void sendData(Visitor);
 
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
+    QSqlTableModel *sqlmodel;
+    QSqlDatabase db;
 };
 #endif // MAINWINDOW_H
