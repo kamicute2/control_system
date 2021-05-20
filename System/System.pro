@@ -2,6 +2,8 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+TARGET = DataBase
+TEMPLATE = app
 CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -13,17 +15,20 @@ SOURCES += \
     form.cpp \
     main.cpp \
     mainwindow.cpp \
+    otchet.cpp \
     visitor.cpp
 
 HEADERS += \
     database.h \
     form.h \
     mainwindow.h \
+    otchet.h \
     visitor.h
 
 FORMS += \
     form.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    otchet.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

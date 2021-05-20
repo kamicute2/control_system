@@ -6,6 +6,8 @@ Form::Form(QWidget *parent) :
     ui(new Ui::Form)
 {
     ui->setupUi(this);
+    ui->label->setVisible(false);
+    ui->lineEdit->setVisible(false);
 }
 
 Form::~Form()
@@ -20,7 +22,7 @@ Visitor Form::ReturnValue()
     QString name = ui->lineEdit_2->text();
     QString phone = ui->lineEdit_3->text();
     QString product = ui->lineEdit_4->text();
-    QString price = ui->lineEdit_5->text();
+    int price = ui->lineEdit_5->text().toInt();
     QString date = ui->lineEdit_6->text();
     QString ready = ui->lineEdit_7->text();
     visitor.SetVisitor(number, name, phone, product, price, date, ready);

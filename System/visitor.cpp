@@ -2,12 +2,20 @@
 
 Visitor::Visitor()
 {
-
+    myNumber = 1;
+    myCurDate = QDate::currentDate();
+    myName = "Name";
+    myPhone = "Phone";
+    myProduct = "Product";
+    myPrice = 100;
+    myDate = "Date";
+    myReady = "Ready";
 }
 
 void Visitor::SetVisitor(int Number, QString Name, QString Phone, QString Product, int Price, QString Date, QString Ready)
 {
     myNumber = Number;
+    myCurDate = QDate::currentDate();
     myName = Name;
     myPhone = Phone;
     myProduct = Product;
@@ -16,7 +24,7 @@ void Visitor::SetVisitor(int Number, QString Name, QString Phone, QString Produc
     myReady = Ready;
 }
 
-void Visitor::SetRow(QStandardItemModel *model, int i)
+void Visitor::SetRow(QSqlTableModel *model, int i)
 {
     QModelIndex index = model->index(i,0);
     model->setData(index, myNumber);
@@ -37,6 +45,11 @@ void Visitor::SetRow(QStandardItemModel *model, int i)
 QString Visitor::getNumber()
 {
     return QString::number(myNumber);
+}
+
+QDate Visitor::getCurDate()
+{
+    return myCurDate;
 }
 
 QString Visitor::getName()

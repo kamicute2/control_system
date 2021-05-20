@@ -74,8 +74,8 @@ bool DataBase::createTable()
      * */
     QSqlQuery query;
     if(!query.exec( "CREATE TABLE " TABLE " ("
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                            TABLE_NUMBER        " INTEGER         NOT NULL,"
+                            "id INTEGER PRIMARY KEY, "
+                            TABLE_CURRENT_DATE  " DATE            NOT NULL,"
                             TABLE_NAME          " VARCHAR(255)    NOT NULL,"
                             TABLE_PHONE         " VARCHAR(255)    NOT NULL,"
                             TABLE_PRODUCT       " VARCHAR(255)    NOT NULL,"
@@ -94,32 +94,31 @@ bool DataBase::createTable()
 }
 
 /* Метод для вставки записи в базу данных
- * */
-bool DataBase::inserIntoTable(const QVariantList &data)
+ */
+bool DataBase::inserIntoTable(Visitor &visitor)
 {
-    /* Запрос SQL формируется из QVariantList,
-     * в который передаются данные для вставки в таблицу.
-     * */
+    /* Запрос SQL формируется из Visitor,
+    */
     QSqlQuery query;
     /* В начале SQL запрос формируется с ключами,
      * которые потом связываются методом bindValue
      * для подстановки данных из QVariantList
      * */
-    query.prepare("INSERT INTO " TABLE " ( " TABLE_NUMBER ", "
+    query.prepare("INSERT INTO " TABLE " ( " TABLE_CURRENT_DATE ", "
                                              TABLE_NAME ", "
                                              TABLE_PHONE ", "
                                              TABLE_PRODUCT ", "
                                              TABLE_PRICE ", "
                                              TABLE_DATE ", "
                                              TABLE_READY " ) "
-                  "VALUES (:Number, :Name, :Phone, :Product, :Price, :Date, :Ready )");
-    query.bindValue(":Number",        data[0].toInt());
-    query.bindValue(":Name",        data[1].toString());
-    query.bindValue(":Phone",      data[2].toString());
-    query.bindValue(":Product",     data[3].toString());
-    query.bindValue(":Price",     data[4].toInt());
-    query.bindValue(":Date",     data[5].toString());
-    query.bindValue(":Ready",     data[6].toString());
+                  "VALUES (:CurDate, :Name, :Phone, :Product, :Price, :Date, :Ready )");
+    query.bindValue(":CurDate",     visitor.getCurDate().toString("d MMMM yyyy"));
+    query.bindValue(":Name",        visitor.getName());
+    query.bindValue(":Phone",      visitor.getPhone());
+    query.bindValue(":Product",     visitor.getProduct());
+    query.bindValue(":Price",     visitor.getPrice().toInt());
+    query.bindValue(":Date",     visitor.getDate());
+    query.bindValue(":Ready",     visitor.getReady());
     // После чего выполняется запросом методом exec()
     if(!query.exec()){
         qDebug() << "error insert into " << TABLE;
@@ -130,3 +129,48 @@ bool DataBase::inserIntoTable(const QVariantList &data)
     }
     return false;
 }
+/* Метод для изменения записи в базе данных
+ */
+bool DataBase::editIntoTable(Visitor &visitor)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE " TABLE " SET "    TABLE_CURRENT_DATE  " =: " TABLE_CURRENT_DATE ", "
+                                             TABLE_NAME " =: " TABLE_NAME ", "
+                                             TABLE_PHONE " =: " TABLE_PHONE ", "
+                                             TABLE_PRODUCT " =: " TABLE_PRODUCT ", "
+                                             TABLE_PRICE " =: " TABLE_PRICE ", "
+                                             TABLE_DATE " =: " TABLE_DATE ", "
+                                             TABLE_READY " =: " TABLE_READY
+                  "WHERE id=:id) ");
+    query.bindValue(":TABLE_CURRENT_DATE",  visitor.getCurDate().toString("d MMMM yyyy"));
+    query.bindValue(":Name",        visitor.getName());
+    query.bindValue(":Phone",      visitor.getPhone());
+    query.bindValue(":Product",     visitor.getProduct());
+    query.bindValue(":Price",     visitor.getPrice().toInt());
+    query.bindValue(":Date",     visitor.getDate());
+    query.bindValue(":Ready",     visitor.getReady());
+    // После чего выполняется запросом методом exec()
+    if(!query.exec()){
+        qDebug() << "error edit into " << TABLE;
+        qDebug() << query.lastError().text();
+        return false;
+    } else {
+        return true;
+    }
+    return false;
+}
+bool DataBase::deleteIntoTable(int value)
+{
+    QSqlQuery query;
+    query.prepare("DELETE FROM " TABLE " WHERE id=:id;");
+    query.bindValue(":id", value);
+    if(!query.exec()){
+        qDebug() << "error delete into " << TABLE;
+        qDebug() << query.lastError().text();
+        return false;
+    } else {
+        return true;
+    }
+    return false;
+}
+
