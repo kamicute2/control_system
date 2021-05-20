@@ -15,20 +15,20 @@ SOURCES += \
     form.cpp \
     main.cpp \
     mainwindow.cpp \
-    otchet.cpp \
+    report.cpp \
     visitor.cpp
 
 HEADERS += \
     database.h \
     form.h \
     mainwindow.h \
-    otchet.h \
+    report.h \
     visitor.h
 
 FORMS += \
     form.ui \
     mainwindow.ui \
-    otchet.ui
+    report.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

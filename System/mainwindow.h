@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QSqlTableModel>
 #include "form.h"
+#include "report.h"
 #include "visitor.h"
 #include "database.h"
 
@@ -19,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    reportData tableReport(int value);
+    reportData tableReport(int value, int days);
 private:
     void setupModel(const QString &tableName);
     void createUI();
@@ -27,6 +31,8 @@ private slots:
     void on_editButon_clicked();
 
     void on_deleteButton_clicked();
+
+    void on_makeReportButton_clicked();
 
 public slots:
     //void receiveData(Visitor);

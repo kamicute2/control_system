@@ -20,14 +20,10 @@ MainWindow::MainWindow(QWidget *parent)
     //db->inserIntoTable(visitor);
     this->setupModel(TABLE);
     this->createUI();
-    QDate date = QDate::currentDate();
-
-    qDebug() << date.toString("d MMMM yyyy");
-
     Form form;
     //Соединяем сигналы и слоты
     //connect(this, SIGNAL(sendData(Visitor)), form, SLOT(receiveData(Visitor)));
-
+    qDebug() <<  QDate::currentDate().dayOfYear();
     //connect(this, SIGNAL(receiveData(Visitor)), form, SLOT((Visitor)));
     //Работа с таблицей
 }
@@ -46,7 +42,6 @@ void MainWindow::on_addButton_clicked()
     {
         Visitor visitor;
         visitor = form.ReturnValue();
-        qDebug() << visitor.getCurDate().toString();
         db->inserIntoTable(visitor);
         sqlmodel->select();
     }
@@ -59,7 +54,7 @@ void MainWindow::on_editButon_clicked()
         Visitor visitor;
         //Из значений строк создаем объект, который передадим в функцию формы для заполнения строк
         QModelIndex index;
-        int j=0; //столбец
+        int j=1; //столбец
         QString text;
         index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
         text = index.data().toString();
@@ -195,4 +190,82 @@ void MainWindow::on_deleteButton_clicked()
           break;
         }
     }
+}
+
+
+
+void MainWindow::on_makeReportButton_clicked()
+{
+    Report report;
+    report.setModal(true);
+    report.exec();
+}
+
+reportData MainWindow::tableReport(int value)
+{
+    reportData data;
+    QDate date = QDate::currentDate();
+    switch(value)
+    {
+        case 0:
+        {
+            for(int i=0; i<sqlmodel->rowCount();i++ )
+            {
+                if(sqlmodel->index(i, 1, QModelIndex()).data().toDate().day() == date.day())
+                {
+                    data.coutClients++;
+                    data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+                    if(data.maxPrice<sqlmodel->index(i, 5, QModelIndex()).data().toInt())
+                        data.maxPrice=sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+                }
+            }
+            break;
+        }
+        case 1:
+        {
+            for(int i=0; i<sqlmodel->rowCount();i++ )
+            {
+                if(sqlmodel->index(i, 1, QModelIndex()).data().toDate().month() == date.month())
+                {
+                    data.coutClients++;
+                    data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+                    if(data.maxPrice<sqlmodel->index(i, 5, QModelIndex()).data().toInt())
+                        data.maxPrice=sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+                }
+            }
+            break;
+        }
+        case 2:
+        {
+            for(int i=0; i<sqlmodel->rowCount();i++ )
+            {
+                if(sqlmodel->index(i, 1, QModelIndex()).data().toDate().year() == date.year())
+                {
+                    data.coutClients++;
+                    data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+                    if(data.maxPrice<sqlmodel->index(i, 5, QModelIndex()).data().toInt())
+                        data.maxPrice=sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+                }
+            }
+            break;
+        }
+    }
+    return data;
+}
+
+reportData MainWindow::tableReport(int value, int days)
+{
+    reportData data;
+    QDate date = QDate::currentDate();
+    for(int i=0; i<sqlmodel->rowCount();i++ )
+    {
+        if(date.dayOfYear() - sqlmodel->index(i, 1, QModelIndex()).data().toDate().day() <= days-1 )
+        {
+            data.coutClients++;
+            data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+            if(data.maxPrice<sqlmodel->index(i, 5, QModelIndex()).data().toInt())
+                data.maxPrice=sqlmodel->index(i, 5, QModelIndex()).data().toInt();
+        }
+    }
+    return data;
 }
