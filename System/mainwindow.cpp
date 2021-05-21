@@ -4,6 +4,8 @@
 #include <QTableWidgetItem>
 #include <QMessageBox>
 
+
+
 int RowNum = 0;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -21,9 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setupModel(TABLE);
     this->createUI();
     Form form;
-    //Соединяем сигналы и слоты
+
     //connect(this, SIGNAL(sendData(Visitor)), form, SLOT(receiveData(Visitor)));
-    qDebug() <<  QDate::currentDate().dayOfYear();
+
     //connect(this, SIGNAL(receiveData(Visitor)), form, SLOT((Visitor)));
     //Работа с таблицей
 }
@@ -122,6 +124,7 @@ void MainWindow::on_editButon_clicked()
 
 void MainWindow::setupModel(const QString &tableName)
 {
+
     /* Производим инициализацию модели представления данных
      * с установкой имени таблицы в базе данных, по которому
      * будет производится обращение в таблице
@@ -204,15 +207,17 @@ void MainWindow::on_makeReportButton_clicked()
 reportData MainWindow::tableReport(int value)
 {
     reportData data;
-    QDate date = QDate::currentDate();
+    QString date = QDate::currentDate().toString("d MMMM yyyy");
+    QStringList items = date.split(" ");
     switch(value)
     {
         case 0:
         {
             for(int i=0; i<sqlmodel->rowCount();i++ )
             {
-                if(sqlmodel->index(i, 1, QModelIndex()).data().toDate().day() == date.day())
+                if(sqlmodel->index(i, 1, QModelIndex()).data().toString() == date)
                 {
+
                     data.coutClients++;
                     data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();
                     if(data.maxPrice<sqlmodel->index(i, 5, QModelIndex()).data().toInt())
@@ -225,7 +230,8 @@ reportData MainWindow::tableReport(int value)
         {
             for(int i=0; i<sqlmodel->rowCount();i++ )
             {
-                if(sqlmodel->index(i, 1, QModelIndex()).data().toDate().month() == date.month())
+                if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == items[1] &&
+                   sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2] == items[2])
                 {
                     data.coutClients++;
                     data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();
@@ -239,7 +245,7 @@ reportData MainWindow::tableReport(int value)
         {
             for(int i=0; i<sqlmodel->rowCount();i++ )
             {
-                if(sqlmodel->index(i, 1, QModelIndex()).data().toDate().year() == date.year())
+                if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2] == items[2])
                 {
                     data.coutClients++;
                     data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();
@@ -257,9 +263,48 @@ reportData MainWindow::tableReport(int value, int days)
 {
     reportData data;
     QDate date = QDate::currentDate();
+    QDate datadate = QDate(sqlmodel->index(1, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+            1,sqlmodel->index(1, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
     for(int i=0; i<sqlmodel->rowCount();i++ )
     {
-        if(date.dayOfYear() - sqlmodel->index(i, 1, QModelIndex()).data().toDate().day() <= days-1 )
+
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "January")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    1,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "February")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    2,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "March")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    3,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "April")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    4,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "May")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    5,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "June")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    6,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "July")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    7,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "August")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    8,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "September")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    9,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "October")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    10,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "November")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    11,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[1] == "December")
+            datadate = QDate(sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[2].toInt(),
+                    12,sqlmodel->index(i, 1, QModelIndex()).data().toString().split(" ")[0].toInt());
+        if(date.dayOfYear() - datadate.dayOfYear() <= days-1 )
         {
             data.coutClients++;
             data.sumPrice += sqlmodel->index(i, 5, QModelIndex()).data().toInt();

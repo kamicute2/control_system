@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Report
 {
 public:
-    QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QComboBox *comboBox;
@@ -33,6 +33,11 @@ public:
     QLabel *label_2;
     QLineEdit *lineEdit;
     QPushButton *pushButton;
+    QVBoxLayout *verticalLayout;
+    QLabel *label_3;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLabel *label_6;
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer;
@@ -44,8 +49,8 @@ public:
         if (Report->objectName().isEmpty())
             Report->setObjectName(QString::fromUtf8("Report"));
         Report->resize(662, 429);
-        verticalLayout = new QVBoxLayout(Report);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout_2 = new QVBoxLayout(Report);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         label = new QLabel(Report);
@@ -69,7 +74,7 @@ public:
         horizontalLayout->addWidget(comboBox);
 
 
-        verticalLayout->addLayout(horizontalLayout);
+        verticalLayout_2->addLayout(horizontalLayout);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
@@ -87,7 +92,7 @@ public:
         horizontalLayout_2->addWidget(lineEdit);
 
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout_2->addLayout(horizontalLayout_2);
 
         pushButton = new QPushButton(Report);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
@@ -99,11 +104,48 @@ public:
         pushButton->setMinimumSize(QSize(640, 50));
         pushButton->setStyleSheet(QString::fromUtf8(""));
 
-        verticalLayout->addWidget(pushButton);
+        verticalLayout_2->addWidget(pushButton);
+
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        label_3 = new QLabel(Report);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setFont(font);
+        label_3->setStyleSheet(QString::fromUtf8("margin-top: 10px;\n"
+""));
+
+        verticalLayout->addWidget(label_3);
+
+        label_4 = new QLabel(Report);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setFont(font);
+        label_4->setStyleSheet(QString::fromUtf8("margin-top: 5px;\n"
+""));
+
+        verticalLayout->addWidget(label_4);
+
+        label_5 = new QLabel(Report);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setFont(font);
+        label_5->setStyleSheet(QString::fromUtf8("margin-top: 5px;\n"
+""));
+
+        verticalLayout->addWidget(label_5);
+
+        label_6 = new QLabel(Report);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setFont(font);
+        label_6->setStyleSheet(QString::fromUtf8("margin-top: 5px;\n"
+""));
+
+        verticalLayout->addWidget(label_6);
+
+
+        verticalLayout_2->addLayout(verticalLayout);
 
         verticalSpacer = new QSpacerItem(20, 188, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        verticalLayout->addItem(verticalSpacer);
+        verticalLayout_2->addItem(verticalSpacer);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
@@ -121,7 +163,7 @@ public:
         horizontalLayout_3->addItem(horizontalSpacer_2);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout_2->addLayout(horizontalLayout_3);
 
 
         retranslateUi(Report);
@@ -140,6 +182,10 @@ public:
 
         label_2->setText(QCoreApplication::translate("Report", "\320\222\321\213\320\261\320\265\321\200\320\270\321\202\320\265 \320\272\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \320\264\320\275\320\265\320\271:", nullptr));
         pushButton->setText(QCoreApplication::translate("Report", "\320\241\320\276\321\201\321\202\320\260\320\262\320\270\321\202\321\214 \320\276\321\202\321\207\320\265\321\202", nullptr));
+        label_3->setText(QCoreApplication::translate("Report", "12", nullptr));
+        label_4->setText(QCoreApplication::translate("Report", "12", nullptr));
+        label_5->setText(QCoreApplication::translate("Report", "12", nullptr));
+        label_6->setText(QCoreApplication::translate("Report", "12", nullptr));
         pushButton_3->setText(QCoreApplication::translate("Report", "\320\227\320\260\320\272\321\200\321\213\321\202\321\214", nullptr));
     } // retranslateUi
 

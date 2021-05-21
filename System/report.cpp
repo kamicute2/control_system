@@ -11,6 +11,10 @@ Report::Report(QWidget *parent) :
     ui->setupUi(this);
     ui->label_2->hide();
     ui->lineEdit->hide();
+    ui->label_3->hide();
+    ui->label_4->hide();
+    ui->label_5->hide();
+    ui->label_6->hide();
     //ui->label_2->show();
 }
 
@@ -39,12 +43,49 @@ void Report::on_comboBox_currentIndexChanged(int index)
 void Report::on_pushButton_clicked()
 {
     MainWindow mainwindow;
+    int ret = 1;
+    reportData data;
     if(ui->comboBox->currentIndex()<3)
-        reportData data = mainwindow.tableReport(ui->comboBox->currentIndex());
+        data = mainwindow.tableReport(ui->comboBox->currentIndex());
     else
         if(!ui->lineEdit->text().isEmpty())
-            reportData data = mainwindow.tableReport(ui->comboBox->currentIndex(), ui->lineEdit->text().toInt());
+            data = mainwindow.tableReport(ui->comboBox->currentIndex(), ui->lineEdit->text().toInt());
         else
-            int ret = QMessageBox::warning(this, "Неверное значение","Введите значение в поле \n \"Количество дней\"",QMessageBox::Ok, QMessageBox::Ok);
+        {
+            QMessageBox::warning(this, "Неверное значение","Введите значение в поле \n \"Количество дней\"",QMessageBox::Ok, QMessageBox::Ok);
 
+            return;
+        }
+    if (ret)
+    {
+        ui->label_3->show();
+        ui->label_4->show();
+        ui->label_5->show();
+        ui->label_6->show();
+        switch (ui->comboBox->currentIndex()) {
+        case 0:
+        {
+            ui->label_3->setText("Отчет за " + QDate::currentDate().toString("d MMMM yyyy"));
+            break;
+        }
+        case 1:
+        {
+            ui->label_3->setText("Отчет за " + QDate::currentDate().toString("MMMM"));
+            break;
+        }
+        case 2:
+        {
+            ui->label_3->setText("Отчет за " + QDate::currentDate().toString("yyyy"));
+            break;
+        }
+        case 3:
+        {
+            ui->label_3->setText("Отчет за " + ui->lineEdit->text() + " дней");
+            break;
+        }
+        }
+        ui->label_4->setText("Количество посетителей: " + QString::number(data.coutClients));
+        ui->label_5->setText("Выручка: " + QString::number(data.sumPrice) + "₽");
+        ui->label_6->setText("Самая большая покупка: " + QString::number(data.maxPrice) + "₽");
+    }
 }

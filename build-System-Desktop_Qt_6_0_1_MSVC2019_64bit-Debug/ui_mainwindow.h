@@ -13,6 +13,8 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -35,6 +37,9 @@ public:
     QPushButton *deleteButton;
     QPushButton *makeReportButton;
     QSpacerItem *horizontalSpacer;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *label;
+    QLineEdit *lineEdit;
     QTableView *tableView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -43,7 +48,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(697, 569);
+        MainWindow->resize(827, 574);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -101,6 +106,28 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        label = new QLabel(centralwidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setMaximumSize(QSize(16777215, 30));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Arial"));
+        font.setPointSize(14);
+        label->setFont(font);
+
+        verticalLayout_2->addWidget(label);
+
+        lineEdit = new QLineEdit(centralwidget);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setMinimumSize(QSize(0, 30));
+        lineEdit->setStyleSheet(QString::fromUtf8(""));
+
+        verticalLayout_2->addWidget(lineEdit);
+
+
+        horizontalLayout->addLayout(verticalLayout_2);
+
 
         verticalLayout->addLayout(horizontalLayout);
 
@@ -117,7 +144,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 697, 26));
+        menubar->setGeometry(QRect(0, 0, 827, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -135,6 +162,7 @@ public:
         editButon->setText(QCoreApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214", nullptr));
         deleteButton->setText(QCoreApplication::translate("MainWindow", "\320\243\320\264\320\260\320\273\320\270\321\202\321\214", nullptr));
         makeReportButton->setText(QCoreApplication::translate("MainWindow", "\320\236\321\202\321\207\320\265\321\202", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\270\321\201\320\272:", nullptr));
     } // retranslateUi
 
 };
