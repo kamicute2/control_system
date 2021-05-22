@@ -41,8 +41,9 @@ public:
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer;
-    QPushButton *pushButton_3;
+    QPushButton *pushButton_2;
     QSpacerItem *horizontalSpacer_2;
+    QPushButton *pushButton_3;
 
     void setupUi(QDialog *Report)
     {
@@ -153,14 +154,26 @@ public:
 
         horizontalLayout_3->addItem(horizontalSpacer);
 
-        pushButton_3 = new QPushButton(Report);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_2 = new QPushButton(Report);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(30);
+        sizePolicy1.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
+        pushButton_2->setSizePolicy(sizePolicy1);
+        pushButton_2->setMinimumSize(QSize(0, 50));
 
-        horizontalLayout_3->addWidget(pushButton_3);
+        horizontalLayout_3->addWidget(pushButton_2);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer_2);
+
+        pushButton_3 = new QPushButton(Report);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_3->setMinimumSize(QSize(0, 35));
+
+        horizontalLayout_3->addWidget(pushButton_3);
 
 
         verticalLayout_2->addLayout(horizontalLayout_3);
@@ -173,7 +186,7 @@ public:
 
     void retranslateUi(QDialog *Report)
     {
-        Report->setWindowTitle(QCoreApplication::translate("Report", "Dialog", nullptr));
+        Report->setWindowTitle(QCoreApplication::translate("Report", "\320\236\321\202\321\207\320\265\321\202", nullptr));
         label->setText(QCoreApplication::translate("Report", "\320\222\321\213\320\261\320\265\321\200\320\270\321\202\320\265 \321\202\320\270\320\277 \320\276\321\202\321\207\320\265\321\202\320\260:", nullptr));
         comboBox->setItemText(0, QCoreApplication::translate("Report", "\320\236\321\202\321\207\320\265\321\202 \320\267\320\260 \320\264\320\265\320\275\321\214", nullptr));
         comboBox->setItemText(1, QCoreApplication::translate("Report", "\320\236\321\202\321\207\320\265\321\202 \320\267\320\260 \320\274\320\265\321\201\321\217\321\206", nullptr));
@@ -186,6 +199,7 @@ public:
         label_4->setText(QCoreApplication::translate("Report", "12", nullptr));
         label_5->setText(QCoreApplication::translate("Report", "12", nullptr));
         label_6->setText(QCoreApplication::translate("Report", "12", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("Report", "\320\241\320\264\320\265\320\273\320\260\321\202\321\214 \320\241\320\272\321\200\320\270\320\275\321\210\320\276\321\202", nullptr));
         pushButton_3->setText(QCoreApplication::translate("Report", "\320\227\320\260\320\272\321\200\321\213\321\202\321\214", nullptr));
     } // retranslateUi
 

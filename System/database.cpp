@@ -117,7 +117,7 @@ bool DataBase::inserIntoTable(Visitor &visitor)
     query.bindValue(":Phone",      visitor.getPhone());
     query.bindValue(":Product",     visitor.getProduct());
     query.bindValue(":Price",     visitor.getPrice().toInt());
-    query.bindValue(":Date",     visitor.getDate());
+    query.bindValue(":Date",     visitor.getDate().toString("d MMMM yyyy HH:mm"));
     query.bindValue(":Ready",     visitor.getReady());
     // После чего выполняется запросом методом exec()
     if(!query.exec()){
@@ -131,6 +131,7 @@ bool DataBase::inserIntoTable(Visitor &visitor)
 }
 /* Метод для изменения записи в базе данных
  */
+/*
 bool DataBase::editIntoTable(Visitor &visitor)
 {
     QSqlQuery query;
@@ -142,13 +143,14 @@ bool DataBase::editIntoTable(Visitor &visitor)
                                              TABLE_DATE " =: " TABLE_DATE ", "
                                              TABLE_READY " =: " TABLE_READY
                   "WHERE id=:id) ");
-    query.bindValue(":TABLE_CURRENT_DATE",  visitor.getCurDate().toString("d MMMM yyyy"));
+    query.bindValue(":CurDate",  visitor.getCurDate().toString("d MMMM yyyy"));
     query.bindValue(":Name",        visitor.getName());
     query.bindValue(":Phone",      visitor.getPhone());
     query.bindValue(":Product",     visitor.getProduct());
     query.bindValue(":Price",     visitor.getPrice().toInt());
     query.bindValue(":Date",     visitor.getDate());
     query.bindValue(":Ready",     visitor.getReady());
+    query.bindValue(":id",     visitor.getNumber().toInt());
     // После чего выполняется запросом методом exec()
     if(!query.exec()){
         qDebug() << "error edit into " << TABLE;
@@ -159,6 +161,8 @@ bool DataBase::editIntoTable(Visitor &visitor)
     }
     return false;
 }
+*/
+
 bool DataBase::deleteIntoTable(int value)
 {
     QSqlQuery query;

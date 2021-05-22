@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -17,6 +18,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
@@ -37,6 +39,9 @@ public:
     QPushButton *deleteButton;
     QPushButton *makeReportButton;
     QSpacerItem *horizontalSpacer;
+    QVBoxLayout *verticalLayout_3;
+    QLabel *label_2;
+    QProgressBar *progressBar;
     QVBoxLayout *verticalLayout_2;
     QLabel *label;
     QLineEdit *lineEdit;
@@ -66,6 +71,10 @@ public:
         addButton->setMinimumSize(QSize(100, 100));
         addButton->setSizeIncrement(QSize(0, 0));
         addButton->setBaseSize(QSize(0, 0));
+        addButton->setStyleSheet(QString::fromUtf8(""));
+        QIcon icon(QIcon::fromTheme(QString::fromUtf8(":images/add.png")));
+        addButton->setIcon(icon);
+        addButton->setAutoExclusive(false);
 
         horizontalLayout->addWidget(addButton);
 
@@ -77,6 +86,8 @@ public:
         editButon->setMinimumSize(QSize(100, 100));
         editButon->setSizeIncrement(QSize(0, 0));
         editButon->setBaseSize(QSize(0, 0));
+        QIcon icon1(QIcon::fromTheme(QString::fromUtf8(":images/edit.png")));
+        editButon->setIcon(icon1);
 
         horizontalLayout->addWidget(editButon);
 
@@ -88,6 +99,8 @@ public:
         deleteButton->setMinimumSize(QSize(100, 100));
         deleteButton->setSizeIncrement(QSize(0, 0));
         deleteButton->setBaseSize(QSize(0, 0));
+        QIcon icon2(QIcon::fromTheme(QString::fromUtf8(":images/delete.png")));
+        deleteButton->setIcon(icon2);
 
         horizontalLayout->addWidget(deleteButton);
 
@@ -99,12 +112,30 @@ public:
         makeReportButton->setMinimumSize(QSize(100, 100));
         makeReportButton->setSizeIncrement(QSize(0, 0));
         makeReportButton->setBaseSize(QSize(0, 0));
+        QIcon icon3(QIcon::fromTheme(QString::fromUtf8(":images/report.png")));
+        makeReportButton->setIcon(icon3);
 
         horizontalLayout->addWidget(makeReportButton);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        verticalLayout_3->addWidget(label_2);
+
+        progressBar = new QProgressBar(centralwidget);
+        progressBar->setObjectName(QString::fromUtf8("progressBar"));
+        progressBar->setValue(24);
+
+        verticalLayout_3->addWidget(progressBar);
+
+
+        horizontalLayout->addLayout(verticalLayout_3);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
@@ -157,11 +188,21 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        addButton->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214", nullptr));
-        editButon->setText(QCoreApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214", nullptr));
-        deleteButton->setText(QCoreApplication::translate("MainWindow", "\320\243\320\264\320\260\320\273\320\270\321\202\321\214", nullptr));
-        makeReportButton->setText(QCoreApplication::translate("MainWindow", "\320\236\321\202\321\207\320\265\321\202", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Kitsune", nullptr));
+        addButton->setText(QString());
+#if QT_CONFIG(shortcut)
+        addButton->setShortcut(QCoreApplication::translate("MainWindow", "Return", nullptr));
+#endif // QT_CONFIG(shortcut)
+        editButon->setText(QString());
+#if QT_CONFIG(shortcut)
+        editButon->setShortcut(QCoreApplication::translate("MainWindow", "\\", nullptr));
+#endif // QT_CONFIG(shortcut)
+        deleteButton->setText(QString());
+#if QT_CONFIG(shortcut)
+        deleteButton->setShortcut(QCoreApplication::translate("MainWindow", "Backspace", nullptr));
+#endif // QT_CONFIG(shortcut)
+        makeReportButton->setText(QString());
+        label_2->setText(QString());
         label->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\270\321\201\320\272:", nullptr));
     } // retranslateUi
 

@@ -8,11 +8,11 @@ Visitor::Visitor()
     myPhone = "Phone";
     myProduct = "Product";
     myPrice = 100;
-    myDate = "Date";
+    myDate = QDateTime::currentDateTime();
     myReady = "Ready";
 }
 
-void Visitor::SetVisitor(int Number, QString Name, QString Phone, QString Product, int Price, QString Date, QString Ready)
+void Visitor::SetVisitor(int Number, QString Name, QString Phone, QString Product, int Price, QDateTime Date, QString Ready)
 {
     myNumber = Number;
     myCurDate = QDate::currentDate();
@@ -72,7 +72,7 @@ QString Visitor::getPrice()
     return QString::number(myPrice);
 }
 
-QString Visitor::getDate()
+QDateTime Visitor::getDate()
 {
     return myDate;
 }
@@ -107,7 +107,7 @@ void Visitor::setPrice(int value)
     myPrice = value;
 }
 
-void Visitor::setDate(QString value)
+void Visitor::setDate(QDateTime value)
 {
     myDate = value;
 }

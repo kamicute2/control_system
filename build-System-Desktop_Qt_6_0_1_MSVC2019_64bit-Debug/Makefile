@@ -206,12 +206,15 @@ Makefile: ..\System\System.pro C:\Qt\6.0.1\msvc2019_64\mkspecs\win32-msvc\qmake.
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Widgets.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Sql.prl \
+		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Network.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Core.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.prl \
 		C:\Qt\6.0.1\msvc2019_64\mkspecs\features\build_pass.prf \
+		..\System\images.qrc \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Widgetsd.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Guid.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Sqld.prl \
+		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6Cored.prl \
 		C:\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPointd.prl
 	$(QMAKE) -o Makefile ..\System\System.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -337,12 +340,15 @@ C:\Qt\6.0.1\msvc2019_64\mkspecs\features\lex.prf:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Widgets.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Sql.prl:
+C:\Qt\6.0.1\msvc2019_64\lib\Qt6Network.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Core.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.prl:
 C:\Qt\6.0.1\msvc2019_64\mkspecs\features\build_pass.prf:
+..\System\images.qrc:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Widgetsd.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Guid.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Sqld.prl:
+C:\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6Cored.prl:
 C:\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPointd.prl:
 qmake: FORCE

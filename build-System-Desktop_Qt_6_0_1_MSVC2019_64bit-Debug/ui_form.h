@@ -9,9 +9,12 @@
 #ifndef UI_FORM_H
 #define UI_FORM_H
 
+#include <QtCore/QDate>
 #include <QtCore/QVariant>
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHBoxLayout>
@@ -41,8 +44,8 @@ public:
     QLineEdit *lineEdit_3;
     QLineEdit *lineEdit_4;
     QLineEdit *lineEdit_5;
-    QLineEdit *lineEdit_6;
-    QLineEdit *lineEdit_7;
+    QDateTimeEdit *dateTimeEdit;
+    QComboBox *comboBox;
     QSpacerItem *verticalSpacer;
     QDialogButtonBox *buttonBox;
 
@@ -153,6 +156,7 @@ public:
         sizePolicy1.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
         lineEdit->setSizePolicy(sizePolicy1);
         lineEdit->setMinimumSize(QSize(0, 30));
+        lineEdit->setCursorPosition(0);
 
         verticalLayout_2->addWidget(lineEdit);
 
@@ -188,21 +192,23 @@ public:
 
         verticalLayout_2->addWidget(lineEdit_5);
 
-        lineEdit_6 = new QLineEdit(Form);
-        lineEdit_6->setObjectName(QString::fromUtf8("lineEdit_6"));
-        sizePolicy1.setHeightForWidth(lineEdit_6->sizePolicy().hasHeightForWidth());
-        lineEdit_6->setSizePolicy(sizePolicy1);
-        lineEdit_6->setMinimumSize(QSize(0, 30));
+        dateTimeEdit = new QDateTimeEdit(Form);
+        dateTimeEdit->setObjectName(QString::fromUtf8("dateTimeEdit"));
+        dateTimeEdit->setDate(QDate(2001, 1, 1));
+        dateTimeEdit->setCurrentSection(QDateTimeEdit::DaySection);
+        dateTimeEdit->setCalendarPopup(true);
 
-        verticalLayout_2->addWidget(lineEdit_6);
+        verticalLayout_2->addWidget(dateTimeEdit);
 
-        lineEdit_7 = new QLineEdit(Form);
-        lineEdit_7->setObjectName(QString::fromUtf8("lineEdit_7"));
-        sizePolicy1.setHeightForWidth(lineEdit_7->sizePolicy().hasHeightForWidth());
-        lineEdit_7->setSizePolicy(sizePolicy1);
-        lineEdit_7->setMinimumSize(QSize(0, 30));
+        comboBox = new QComboBox(Form);
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+        comboBox->setFont(font);
 
-        verticalLayout_2->addWidget(lineEdit_7);
+        verticalLayout_2->addWidget(comboBox);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
@@ -231,7 +237,7 @@ public:
 
     void retranslateUi(QDialog *Form)
     {
-        Form->setWindowTitle(QCoreApplication::translate("Form", "Dialog", nullptr));
+        Form->setWindowTitle(QCoreApplication::translate("Form", "\320\244\320\276\321\200\320\274\320\260 \320\272\320\273\320\270\320\265\320\275\321\202\320\260", nullptr));
         label->setText(QCoreApplication::translate("Form", "\320\235\320\276\320\274\320\265\321\200", nullptr));
         label_2->setText(QCoreApplication::translate("Form", "\320\244\320\230\320\236", nullptr));
         label_3->setText(QCoreApplication::translate("Form", "\320\242\320\265\320\273\320\265\321\204\320\276\320\275", nullptr));
@@ -239,6 +245,15 @@ public:
         label_5->setText(QCoreApplication::translate("Form", "\320\246\320\265\320\275\320\260", nullptr));
         label_6->setText(QCoreApplication::translate("Form", "\320\222\321\200\320\265\320\274\321\217 \320\267\320\260\320\277\320\270\321\201\320\270", nullptr));
         label_7->setText(QCoreApplication::translate("Form", "\320\223\320\276\321\202\320\276\320\262\320\275\320\276\321\201\321\202\321\214", nullptr));
+        lineEdit->setInputMask(QString());
+        lineEdit->setText(QString());
+        lineEdit->setPlaceholderText(QString());
+        dateTimeEdit->setDisplayFormat(QCoreApplication::translate("Form", "d MMMM yyyy HH:mm", nullptr));
+        comboBox->setItemText(0, QCoreApplication::translate("Form", "\320\237\321\200\320\270\320\275\321\217\321\202\320\276", nullptr));
+        comboBox->setItemText(1, QCoreApplication::translate("Form", "\320\237\321\200\320\265\320\264\320\262\320\260\321\200\320\270\321\202\320\265\320\273\321\214\320\275\320\260\321\217 \320\267\320\260\320\277\320\270\321\201\321\214", nullptr));
+        comboBox->setItemText(2, QCoreApplication::translate("Form", "\320\223\320\276\321\202\320\276\320\262\320\276 \320\272 \320\262\321\213\320\264\320\260\321\207\320\265", nullptr));
+        comboBox->setItemText(3, QCoreApplication::translate("Form", "\320\222\321\213\320\264\320\260\320\275\320\276", nullptr));
+
     } // retranslateUi
 
 };

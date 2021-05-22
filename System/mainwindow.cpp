@@ -4,16 +4,23 @@
 #include <QTableWidgetItem>
 #include <QMessageBox>
 
+static const int TotalBytes = 50 * 1024 * 1024;
+static const int PayloadSize = 64 * 1024; // 64 KB
 
-
-int RowNum = 0;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    this->setLocale(QLocale::Byelorussian);
+    this->setWindowTitle("Kitsune");
+    this->setWindowIconText("Kitsune");
+    this->setWindowIcon(QIcon(":images/icon.png"));
     ui->setupUi(this);
+
+    ui->addButton->setIconSize({100,80});
+    ui->editButon->setIconSize({100,80});
+    ui->deleteButton->setIconSize({100,80});
+    ui->makeReportButton->setIconSize({100,80});
     /* Создать объект, который будет использоваться для работы с данными нашей БД  и инициализировать подключение к базе данных */
     db = new DataBase();
     db->connectToDataBase();
@@ -23,11 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
     this->setupModel(TABLE);
     this->createUI();
     Form form;
-
     //connect(this, SIGNAL(sendData(Visitor)), form, SLOT(receiveData(Visitor)));
 
     //connect(this, SIGNAL(receiveData(Visitor)), form, SLOT((Visitor)));
-    //Работа с таблицей
+    ui->progressBar->hide();
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +46,7 @@ void MainWindow::on_addButton_clicked()
 {
     Form form;
     form.setModal(true);
+    form.hint(OftenWords());
     if(form.exec())
     {
         Visitor visitor;
@@ -56,12 +63,8 @@ void MainWindow::on_editButon_clicked()
         Visitor visitor;
         //Из значений строк создаем объект, который передадим в функцию формы для заполнения строк
         QModelIndex index;
-        int j=1; //столбец
+        int j=2; //столбец
         QString text;
-        index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
-        text = index.data().toString();
-        visitor.setNumber(text.toInt());
-        j++;
         index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
         text = index.data().toString();
         visitor.setName(text);
@@ -79,27 +82,27 @@ void MainWindow::on_editButon_clicked()
         visitor.setPrice(text.toInt());
         j++;
         index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
-        text = index.data().toString();
-        visitor.setDate(text);
+        QDateTime a = index.data().toDateTime();
+        visitor.setDate(a);
         j++;
         index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
         text = index.data().toString();
         visitor.setReady(text);
 
 
+
         Form form;
         form.SetLineEdit(visitor);
         form.setModal(true);
-        //form.SetLineEdit();
         if(form.exec())
         {
             Visitor visitor;
-            j=0;
+            j=1;
 
             visitor = form.ReturnValue();
             index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
             j++;
-            sqlmodel->setData(index, visitor.getNumber());
+            sqlmodel->setData(index, visitor.getCurDate().toString("d MMMM yyyy"));
             index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
             j++;
             sqlmodel->setData(index, visitor.getName());
@@ -114,12 +117,17 @@ void MainWindow::on_editButon_clicked()
             sqlmodel->setData(index, visitor.getPrice());
             index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
             j++;
-            sqlmodel->setData(index, visitor.getDate());
+            sqlmodel->setData(index, visitor.getDate().toString("d MMMM yyyy HH:mm"));
             index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), j);
             sqlmodel->setData(index, visitor.getReady());
             //sqlmodel->select();
         }
+        // В Database есть метод editIntoTable(), однако по неизвестным мне причинам он не работает, поэтому используем submitAll()
+        sqlmodel->submitAll();
+
     }
+    else
+        QMessageBox::warning(this, "Строка не выбрана","Выберете строку! \n",QMessageBox::Ok, QMessageBox::Ok);
 }
 
 void MainWindow::setupModel(const QString &tableName)
@@ -167,9 +175,8 @@ void MainWindow::createUI()
     // Устанавливаем режим выделения лишь одно строки в таблице
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     // Устанавливаем размер колонок по содержимому
-//    ui->tableView->resizeColumnsToContents();
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-//    ui->tableView->horizontalHeader()->setStretchLastSection(true);
+
 
     sqlmodel->select(); // Делаем выборку данных из таблицы
 }
@@ -182,7 +189,7 @@ void MainWindow::on_deleteButton_clicked()
         int ret = QMessageBox::question(this, "Удалить","Удалить элемент\n\nВы действительно хотите удалить элемент?",QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
         switch(ret){
         case QMessageBox::Ok:{
-            // Нажата кнопка Save
+            // Нажата кнопка OK
             QModelIndex index = selectedRowsIndexesList[0].sibling(selectedRowsIndexesList[0].row(), 0);
             db->deleteIntoTable(index.data().toInt());
             sqlmodel->select();
@@ -193,15 +200,26 @@ void MainWindow::on_deleteButton_clicked()
           break;
         }
     }
+    else
+        QMessageBox::warning(this, "Строка не выбрана","Выберете строку! \n",QMessageBox::Ok, QMessageBox::Ok);
 }
-
-
 
 void MainWindow::on_makeReportButton_clicked()
 {
     Report report;
     report.setModal(true);
     report.exec();
+}
+
+QSqlQuery MainWindow::OftenWords()
+{
+    QSqlQuery query;
+    query.prepare("SELECT Name, COUNT(*) FROM " TABLE
+                    " GROUP BY Name "
+                    " HAVING COUNT(*) > 1");
+    query.exec();
+    return query;
+
 }
 
 reportData MainWindow::tableReport(int value)
@@ -313,4 +331,76 @@ reportData MainWindow::tableReport(int value, int days)
         }
     }
     return data;
+}
+
+// Реализация поиска
+
+void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+{
+    QString filter;
+    if(arg1.length()>=1){
+        filter =QString("id LIKE ('%%1%') OR " TABLE_CURRENT_DATE " LIKE ('%%1%') OR " TABLE_NAME " LIKE ('%%1%') OR " TABLE_PHONE " LIKE ('%%1%')").arg(arg1);
+        sqlmodel->setFilter(filter);
+    } else {
+        filter= QString("id LIKE ('') OR " TABLE_CURRENT_DATE " LIKE ('') OR " TABLE_NAME " LIKE ('') OR " TABLE_PHONE " LIKE ('')");
+        sqlmodel->setFilter(QString());
+    }
+    sqlmodel->select();
+
+}
+
+
+
+
+
+
+
+
+
+
+//Сервепные слоты
+
+void MainWindow::acceptConnection()
+{
+    tcpServerConnection = tcpServer.nextPendingConnection();
+    connect(tcpServerConnection,SIGNAL(connected()), this, SLOT(startTransfer()));
+    connect(tcpServerConnection, SIGNAL(bytesWritten(qint64)), this, SLOT(updateServerProgress(qint64)));
+    connect(tcpServerConnection, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+
+    ui->label_2->setText(tr("Accepted connection"));
+    startTransfer();
+}
+void MainWindow::startTransfer()
+{
+    if(QFile("./" DATABASE_NAME).exists())
+    {
+        if (!QFile("./" DATABASE_NAME).open(QIODevice::ReadOnly))
+        {
+        ui->label_2->setText("Couldn't open the file");
+        return;
+        }
+        int TotalBytes = QFile("./" DATABASE_NAME).size();
+
+        bytesToWrite = TotalBytes - (int)tcpServerConnection->write("./" DATABASE_NAME);
+        ui->label_2->setText(tr("Connected"));
+    }
+    else
+    {
+        ui->label_2->setText("The file does not exist");
+        return;
+    }
+
+}
+
+void MainWindow::updateServerProgress(qint64 numBytes)
+{
+    bytesWritten += (int)numBytes;
+
+    // only write more if not finished and when the Qt write buffer is below a certain size.
+    if (bytesToWrite > 0 && tcpServerConnection->bytesToWrite() <= 4*PayloadSize)
+        bytesToWrite -= (int)tcpServerConnection->write("./" DATABASE_NAME);
+
+    ui->progressBar->setMaximum(TotalBytes);
+    ui->progressBar->setValue(bytesWritten);
+    ui->label_2->setText(tr("Sent %1MB").arg(bytesWritten / (1024 * 1024)));
 }

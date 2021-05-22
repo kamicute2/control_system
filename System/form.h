@@ -14,6 +14,8 @@ class Form : public QDialog
 public:
     explicit Form(QWidget *parent = nullptr);
     ~Form();
+
+    void hint(QSqlQuery query);
     Visitor ReturnValue();
     void SetLineEdit(Visitor visitor);
 public slots:

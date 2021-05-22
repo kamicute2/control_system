@@ -13,11 +13,11 @@ private:
     QString myPhone;
     QString myProduct;
     int myPrice;
-    QString myDate;
+    QDateTime myDate;
     QString myReady;
 public:
     Visitor();
-    void SetVisitor(int Number, QString Name, QString Phone, QString Product, int Price, QString Date, QString Ready);
+    void SetVisitor(int Number, QString Name, QString Phone, QString Product, int Price, QDateTime Date, QString Ready);
     void SetRow(QSqlTableModel *model, int i);
     QDate getCurDate();
     QString getNumber();
@@ -25,14 +25,14 @@ public:
     QString getPhone();
     QString getProduct();
     QString getPrice();
-    QString getDate();
+    QDateTime getDate();
     QString getReady();
     void setNumber(int value);
     void setName(QString value);
     void setPhone(QString value);
     void setProduct(QString value);
     void setPrice(int value);
-    void setDate(QString value);
+    void setDate(QDateTime value);
     void setReady(QString value);
 };
 

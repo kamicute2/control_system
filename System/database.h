@@ -37,7 +37,7 @@ public:
      * */
     void connectToDataBase();
     bool inserIntoTable(Visitor &visitor);
-    bool editIntoTable(Visitor &visitor);
+    //bool editIntoTable(Visitor &visitor);
     bool deleteIntoTable(int value);
 private:
     // Сам объект базы данных, с которым будет производиться работа
