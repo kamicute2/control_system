@@ -40,6 +40,8 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &arg1);
 
+    void on_action_manual_triggered();
+
 public slots:
     //void receiveData(Visitor);
     void acceptConnection();

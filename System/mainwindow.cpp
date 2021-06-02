@@ -3,6 +3,7 @@
 #include <QtDebug>
 #include <QTableWidgetItem>
 #include <QMessageBox>
+#include "manualbox.h"
 
 static const int TotalBytes = 50 * 1024 * 1024;
 static const int PayloadSize = 64 * 1024; // 64 KB
@@ -16,6 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowIconText("Kitsune");
     this->setWindowIcon(QIcon(":images/icon.png"));
     ui->setupUi(this);
+
+    ui->addButton->setToolTip ("Press Enter");
+    ui->editButon->setToolTip ("Press \\");
+    ui->deleteButton->setToolTip ("Press Backspace");
+    ui->makeReportButton->setToolTip ("Press =");
 
     ui->addButton->setIconSize({100,80});
     ui->editButon->setIconSize({100,80});
@@ -403,4 +409,10 @@ void MainWindow::updateServerProgress(qint64 numBytes)
     ui->progressBar->setMaximum(TotalBytes);
     ui->progressBar->setValue(bytesWritten);
     ui->label_2->setText(tr("Sent %1MB").arg(bytesWritten / (1024 * 1024)));
+}
+
+void MainWindow::on_action_manual_triggered()
+{
+    //ManualBox* window = new ManualBox(this);
+    //window->exec();
 }

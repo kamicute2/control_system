@@ -2,6 +2,9 @@
 #include "ui_form.h"
 #include "mainwindow.h"
 #include <QCompleter>
+#include <QIntValidator>
+#include <QRegularExpressionValidator>
+
 Form::Form(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Form)
@@ -14,7 +17,9 @@ Form::Form(QWidget *parent) :
     ui->lineEdit->setVisible(false);
     ui->dateTimeEdit->setDate(QDate::currentDate());
     ui->dateTimeEdit->setTime(QTime::currentTime());
-    //Podskazka();
+    ui->lineEdit_5->setValidator(new QIntValidator(0, 999999));
+    QRegularExpression expr(R"([8][0-9]{10})");
+    ui->lineEdit_3->setValidator(new QRegularExpressionValidator(expr));
 
 }
 

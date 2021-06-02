@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QScreen>
 #include <QDir>
+#include <QIntValidator>
 
 Report::Report(QWidget *parent) :
     QDialog(parent),
@@ -22,6 +23,8 @@ Report::Report(QWidget *parent) :
     ui->label_4->hide();
     ui->label_5->hide();
     ui->label_6->hide();
+
+    ui->lineEdit->setValidator(new QIntValidator(1, 999));
     //ui->label_2->show();
 }
 
@@ -126,5 +129,6 @@ void Report::on_pushButton_2_clicked()
         int x = screen->virtualGeometry().width() / 2 - Report::width() / 2;
         int y = screen->virtualGeometry().height() / 2 - Report::height() / 2;
         grab().save(fileName);
+
     }
 }

@@ -16,6 +16,7 @@ SOURCES += \
     form.cpp \
     main.cpp \
     mainwindow.cpp \
+    manualbox.cpp \
     report.cpp \
     visitor.cpp
 
@@ -23,6 +24,7 @@ HEADERS += \
     database.h \
     form.h \
     mainwindow.h \
+    manualbox.h \
     report.h \
     visitor.h
 
